@@ -1,0 +1,41 @@
+#A table is set as a cache once you add an expiration to the table definition.  The expiration here is the default for all entries.  Individual entries can be assigned unique expirations in code
+type SampleCache @table(database: "dev", expiration: 86400) @export{
+	id: Any @primaryKey
+}
+
+# This schema shows how the Redirect table could be defined based on a data model that was shared with us.  We added an index MatchUrlPrefix which could be used to search for entries that are close to an entry being written or fetched.  More discussion may be needed as to what that index would look like
+type Redirect @table(database: "dev", expiration: 86400) {
+	ID: Any @primaryKey
+	OriginID: Int
+	LastUpdated: Date
+	CreatedBy: Int
+	CreatedOnBehalfOf: String
+	Created: Date
+	Priority: Int
+	MatchUrl: String
+	MatchUrlPrefix: String @indexed #added this index to show example of a search for compares when PUT-ing/GET-ing
+	MatchQuery: String
+	RedirectUrl: String
+	Description: String
+	Mode: Int
+	StatusCode: Int
+	Type: Int
+	DestinationType: String
+	PreserveQuery: Boolean
+	ForceSSL: Boolean
+	ProhibitQueries: Boolean
+	CaseInsensitive: Boolean
+	StartTime: Date
+	EndTime: Date
+	VersionID: Int
+	Enabled: Boolean
+	LastEnabledUpdated: Date
+	Deleted: Boolean
+	PreserveQueryExclude: String
+	PartialQueryMatch: Boolean
+	Header: String
+	HeaderExclude: Boolean
+	Permanent: Boolean
+	PermanentReason: String
+	PublishStatus: String
+}
